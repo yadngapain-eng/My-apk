@@ -28,10 +28,11 @@ public class QuizActivity extends AppCompatActivity {
     private Button btnNext;
 
     public static void start(Context ctx, LessonData.Lesson lesson) {
-        // Cari index lesson
+        // Cari index lesson — panggil getAll() sekali saja
         int idx = 0;
-        for (int i = 0; i < LessonData.getAll().size(); i++) {
-            if (LessonData.getAll().get(i).title.equals(lesson.title)) { idx = i; break; }
+        java.util.List<LessonData.Lesson> all = LessonData.getAll();
+        for (int i = 0; i < all.size(); i++) {
+            if (all.get(i).title.equals(lesson.title)) { idx = i; break; }
         }
         Intent i = new Intent(ctx, QuizActivity.class);
         i.putExtra(EXTRA_LESSON, idx);
