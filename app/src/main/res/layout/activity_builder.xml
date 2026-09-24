@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#F5F5F5">
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="🔨 Build APK Offline"
+            android:textSize="20sp" android:textStyle="bold"
+            android:textColor="#212121" android:paddingBottom="12dp" />
+
+        <EditText android:id="@+id/etAppName"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Nama Aplikasi" android:inputType="text" />
+
+        <EditText android:id="@+id/etPackageName"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Package Name (com.xxx.yyy)" android:inputType="text" />
+
+        <EditText android:id="@+id/etUrl"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="URL Website (opsional)" android:inputType="textUri" />
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+            <ImageView android:id="@+id/ivIcon"
+                android:layout_width="64dp" android:layout_height="64dp"
+                android:background="#DDDDDD" />
+            <Button android:id="@+id/btnPickIcon"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginStart="12dp" android:text="Icon PNG" />
+        </LinearLayout>
+
+        <Button android:id="@+id/btnPickHtml"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pilih Folder HTML (.zip)" />
+
+        <Button android:id="@+id/btnPickApk"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pilih APK (untuk rebuild)" />
+
+        <Button android:id="@+id/btnBuildWeb"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#1976D2"
+            android:textColor="@android:color/white"
+            android:text="BUILD APK (WEB/HTML)" />
+
+        <Button android:id="@+id/btnRebuildApk"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#FF5722"
+            android:textColor="@android:color/white"
+            android:text="REBUILD APK" />
+
+        <TextView android:id="@+id/tvLog"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#1E1E1E" android:fontFamily="monospace"
+            android:minHeight="250dp" android:padding="10dp"
+            android:textColor="#00FF00" android:textSize="10sp" />
+    </LinearLayout>
+</ScrollView>
