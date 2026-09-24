@@ -2,96 +2,55 @@ package com.apkeditor.pro;
 
 import android.content.Context;
 
+import brut.androlib.ApkDecoder;
+import brut.androlib.ApkBuilder;
+import brut.androlib.Config;
+import brut.directory.ExtFile;
+
 import java.io.File;
 
 /**
- * Decompile/recompile APK secara native di Android.
+ * Decompile/recompile APK pakai apktool-lib (API resmi, bukan CLI).
  *
- * Pendekatan:
- *  - Decode resources + manifest pakai ARSCLib (sudah ada di app/libs).
- *  - Decode dex pakai baksmali (dependency Maven).
- *  - Encode ulang pakai smali + ARSCLib.
+ * Cara kerja:
+ *   - decode: ApkDecoder.decode()  → folder dengan AndroidManifest.xml,
+ *             res/, smali/, dan resources.arsc yang sudah decoded
+ *   - build : ApkBuilder.build()   → APK siap di-sign
  *
- * Catatan: ini versi ringkas. Untuk produksi, eksplor API ARSCLib lebih dalam
- * (com.reandroid.arsc.*) dan smali/baksmali langsung.
+ * apktool-lib ditambahkan sebagai dependency Maven di app/build.gradle:
+ *   implementation 'org.apktool:apktool-lib:2.9.3'
  */
 public class ApktoolRunner {
     private final Context ctx;
 
     public ApktoolRunner(Context c) { this.ctx = c; }
 
-    /**
-     * Decompile APK ke folder outDir (manifest, resources, smali).
-     * Implementasi ringkas: buka APK sebagai ZIP, ekstrak isi ke folder,
-     * decode resources.arsc pakai ARSCLib, decode *.dex pakai baksmali.
-     */
+    /** Decompile APK ke folder outDir. */
     public File decompile(File apk, File outDir) throws Exception {
         if (!outDir.exists()) outDir.mkdirs();
 
-        // 1. Ekstrak ZIP
-        ZipUtil.unzip(apk, outDir);
+        Config config = Config.getDefaultConfig();
+        config.frameworkDirectory = new File(ctx.getFilesDir(), "framework");
 
-        // 2. Decode resources.arsc pakai ARSCLib (jika ada)
-        File arsc = new File(outDir, "resources.arsc");
-        if (arsc.exists()) {
-            try {
-                Class<?> arscLibClass = Class.forName("com.reandroid.arsc.chunk.TableBlock");
-                Object table = arscLibClass.getMethod("readTable", File.class)
-                        .invoke(null, arsc);
-                // Simpan JSON representation kalau API-nya tersedia
-                File resJson = new File(outDir, "resources.json");
-                try {
-                    arscLibClass.getMethod("toJson", File.class)
-                            .invoke(table, resJson);
-                } catch (NoSuchMethodException ignored) {}
-            } catch (ClassNotFoundException ignored) {
-                // ARSCLib tidak tersedia — biarkan resources.arsc apa adanya
-            }
-        }
+        ApkDecoder decoder = new ApkDecoder(config);
+        decoder.setApkFile(new ExtFile(apk));
+        decoder.setOutDir(outDir);
+        decoder.setForceDelete(true);
+        decoder.setDecodeResources(ApkDecoder.DECODE_RESOURCES_FULL);
+        decoder.setDecodeSources(ApkDecoder.DECODE_SOURCES_SMALI);
 
-        // 3. Decode dex pakai baksmali
-        File[] dexFiles = outDir.listFiles((d, n) -> n.endsWith(".dex"));
-        if (dexFiles != null && dexFiles.length > 0) {
-            File smaliDir = new File(outDir, "smali");
-            if (!smaliDir.exists()) smaliDir.mkdirs();
-            for (File dex : dexFiles) {
-                try {
-                    org.jf.baksmali.Main.main(new String[]{
-                        "disassemble",
-                        "-o", smaliDir.getAbsolutePath(),
-                        dex.getAbsolutePath()
-                    });
-                } catch (Throwable t) {
-                    // Lewati kalau API baksmali beda versi
-                }
-            }
-        }
-
+        decoder.decode();
         return outDir;
     }
 
-    /**
-     * Recompile folder (hasil decompile) kembali jadi APK.
-     * Versi ringkas: build dex pakai smali, lalu ZIP-kan folder ke .apk.
-     */
+    /** Recompile folder kerja menjadi APK. */
     public File recompile(File srcDir, File outApk) throws Exception {
-        // 1. Compile smali → dex (kalau ada folder smali)
-        File smaliDir = new File(srcDir, "smali");
-        if (smaliDir.exists() && smaliDir.isDirectory()) {
-            File dexOut = new File(srcDir, "classes.dex");
-            try {
-                org.jf.smali.Main.main(new String[]{
-                    "assemble",
-                    "-o", dexOut.getAbsolutePath(),
-                    smaliDir.getAbsolutePath()
-                });
-            } catch (Throwable t) {
-                // Lewati kalau API smali beda versi
-            }
-        }
+        Config config = Config.getDefaultConfig();
+        config.frameworkDirectory = new File(ctx.getFilesDir(), "framework");
 
-        // 2. ZIP-kan hasilnya jadi APK
-        ZipUtil.zip(srcDir, outApk);
+        ApkBuilder builder = new ApkBuilder(config);
+        builder.build(srcDir, outApk);
+
         return outApk;
     }
 }
