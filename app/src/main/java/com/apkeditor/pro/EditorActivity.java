@@ -1,6 +1,6 @@
 package com.apkeditor.pro;
 
-import android.app.ProgressDialog;
+import com.apkeditor.pro.widget.ProgressView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -83,7 +83,7 @@ public class EditorActivity extends AppCompatActivity {
         }
         final File out = new File(workDir,
             "out_" + System.currentTimeMillis());
-        ProgressDialog pd = showProgress("Decompile APK...");
+        ProgressView pd = showProgress("Decompile APK...");
         new Thread(() -> {
             try {
                 new ApktoolRunner(this).decompile(new File(apkPath), out);
@@ -112,7 +112,7 @@ public class EditorActivity extends AppCompatActivity {
         }
         final File outApk = new File(workDir,
             "build_" + System.currentTimeMillis() + ".apk");
-        ProgressDialog pd = showProgress("Recompile APK...");
+        ProgressView pd = showProgress("Recompile APK...");
         new Thread(() -> {
             try {
                 new ApktoolRunner(this).recompile(outDir, outApk);
@@ -144,7 +144,7 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     private void doSignWithFile(File apk) {
-        ProgressDialog pd = showProgress("Signing APK...");
+        ProgressView pd = showProgress("Signing APK...");
         new Thread(() -> {
             try {
                 File signed = SignUtil.sign(this, apk);
@@ -181,11 +181,9 @@ public class EditorActivity extends AppCompatActivity {
         return latest;
     }
 
-    private ProgressDialog showProgress(String msg) {
-        ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage(msg);
-        pd.setCancelable(false);
-        pd.show();
-        return pd;
+    private ProgressView showProgress(String msg) {
+        ProgressView pv = new ProgressView(this, msg);
+        pv.show();
+        return pv;
     }
 }

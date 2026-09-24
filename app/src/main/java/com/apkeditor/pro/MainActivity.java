@@ -120,7 +120,12 @@ public class MainActivity extends AppCompatActivity {
                 new AlertDialog.Builder(this)
                     .setTitle(apkMeta.getLabel())
                     .setMessage(info)
-                    .setPositiveButton("OK", null)
+                    .setPositiveButton("Buka Editor", (d, w) -> {
+                        Intent i = new Intent(this, EditorActivity.class);
+                        i.putExtra("apk_path", currentApk.getAbsolutePath());
+                        startActivity(i);
+                    })
+                    .setNegativeButton("Tutup", null)
                     .show();
             }
         } catch (Exception e) {
