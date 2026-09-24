@@ -10,15 +10,7 @@ import brut.directory.ExtFile;
 import java.io.File;
 
 /**
- * Decompile/recompile APK pakai apktool-lib (API resmi, bukan CLI).
- *
- * Cara kerja:
- *   - decode: ApkDecoder.decode()  → folder dengan AndroidManifest.xml,
- *             res/, smali/, dan resources.arsc yang sudah decoded
- *   - build : ApkBuilder.build()   → APK siap di-sign
- *
- * apktool-lib ditambahkan sebagai dependency Maven di app/build.gradle:
- *   implementation 'org.apktool:apktool-lib:2.9.3'
+ * Decompile/recompile APK pakai apktool-lib 2.9.3.
  */
 public class ApktoolRunner {
     private final Context ctx;
@@ -29,27 +21,38 @@ public class ApktoolRunner {
     public File decompile(File apk, File outDir) throws Exception {
         if (!outDir.exists()) outDir.mkdirs();
 
+        File fwDir = new File(ctx.getFilesDir(), "framework");
+        if (!fwDir.exists()) fwDir.mkdirs();
+
         Config config = Config.getDefaultConfig();
-        config.frameworkDirectory = new File(ctx.getFilesDir(), "framework");
+        config.frameworkDirectory = fwDir.getAbsolutePath();
+        config.outDir = outDir;
+        config.forceDelete = true;
+        config.decodeResources = Config.DECODE_RESOURCES_FULL;
+        config.decodeSources = Config.DECODE_SOURCES_SMALI;
 
-        ApkDecoder decoder = new ApkDecoder(config);
-        decoder.setApkFile(new ExtFile(apk));
-        decoder.setOutDir(outDir);
-        decoder.setForceDelete(true);
-        decoder.setDecodeResources(ApkDecoder.DECODE_RESOURCES_FULL);
-        decoder.setDecodeSources(ApkDecoder.DECODE_SOURCES_SMALI);
+        ApkDecoder decoder = new ApkDecoder();
+        decoder.setExtFile(new ExtFile(apk));
+        decoder.setConfig(config);
+        decoder.decode(outDir);
 
-        decoder.decode();
         return outDir;
     }
 
     /** Recompile folder kerja menjadi APK. */
     public File recompile(File srcDir, File outApk) throws Exception {
-        Config config = Config.getDefaultConfig();
-        config.frameworkDirectory = new File(ctx.getFilesDir(), "framework");
+        File fwDir = new File(ctx.getFilesDir(), "framework");
+        if (!fwDir.exists()) fwDir.mkdirs();
 
-        ApkBuilder builder = new ApkBuilder(config);
-        builder.build(srcDir, outApk);
+        Config config = Config.getDefaultConfig();
+        config.frameworkDirectory = fwDir.getAbsolutePath();
+        config.outFile = outApk;
+        config.forceAll = true;
+
+        ApkBuilder builder = new ApkBuilder();
+        builder.setExtFile(new ExtFile(srcDir));
+        builder.setConfig(config);
+        builder.build(srcDir);
 
         return outApk;
     }
