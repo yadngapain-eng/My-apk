@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <!-- Header: logo + title + menu -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -14,6 +13,7 @@
         android:background="@color/background"
         app:elevation="0dp">
 
+        <!-- Header biasa -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,9 +23,23 @@
             app:titleTextColor="@color/text_primary"
             app:navigationIcon="@drawable/ic_menu_builder"
             app:menu="@menu/main_menu" />
+
+        <!-- Banner animasi — muncul/hilang tiap 7 detik -->
+        <FrameLayout
+            android:id="@+id/bannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:padding="12dp"
+            android:visibility="gone">
+
+            <com.apkeditor.pro.widget.BannerView
+                android:id="@+id/bannerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Konten scroll -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,57 +50,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="80dp"
+            android:paddingTop="24dp"
             android:paddingBottom="32dp"
             android:gravity="center_horizontal">
 
-            <Button
-                android:id="@+id/btnApkFile"
-                style="@style/MenuButton"
-                android:text="@string/menu_apk_file" />
-
-            <Button
-                android:id="@+id/btnInstalledApp"
-                style="@style/MenuButton"
-                android:text="@string/menu_installed_app" />
-
-            <Button
-                android:id="@+id/btnBuilder"
-                style="@style/MenuButton"
-                android:text="@string/menu_builder"
+            <Button android:id="@+id/btnApkFile"
+                style="@style/MenuButton" android:text="@string/menu_apk_file" />
+            <Button android:id="@+id/btnInstalledApp"
+                style="@style/MenuButton" android:text="@string/menu_installed_app" />
+            <Button android:id="@+id/btnBuilder"
+                style="@style/MenuButton" android:text="@string/menu_builder"
                 android:drawableStart="@drawable/ic_menu_builder"
                 android:drawableTint="@color/primary" />
-
-            <Button
-                android:id="@+id/btnLearnCode"
-                style="@style/MenuButton"
-                android:text="@string/menu_learn_code"
+            <Button android:id="@+id/btnLearnCode"
+                style="@style/MenuButton" android:text="@string/menu_learn_code"
                 android:drawableStart="@drawable/ic_menu_learn"
                 android:drawableTint="@color/primary" />
-
-            <Button
-                android:id="@+id/btnTheme"
-                style="@style/MenuButton"
-                android:text="@string/menu_theme"
+            <Button android:id="@+id/btnTheme"
+                style="@style/MenuButton" android:text="@string/menu_theme"
                 android:drawableStart="@drawable/ic_menu_theme"
                 android:drawableTint="@color/primary" />
-
-            <Button
-                android:id="@+id/btnProjects"
-                style="@style/MenuButton"
-                android:text="@string/menu_projects" />
-
-            <Button
-                android:id="@+id/btnSettings"
-                style="@style/MenuButton"
-                android:text="@string/menu_settings" />
-
-            <Button
-                android:id="@+id/btnExit"
-                style="@style/MenuButton"
-                android:text="@string/menu_exit" />
-
+            <Button android:id="@+id/btnProjects"
+                style="@style/MenuButton" android:text="@string/menu_projects" />
+            <Button android:id="@+id/btnSettings"
+                style="@style/MenuButton" android:text="@string/menu_settings" />
+            <Button android:id="@+id/btnExit"
+                style="@style/MenuButton" android:text="@string/menu_exit" />
         </LinearLayout>
     </ScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

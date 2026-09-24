@@ -33,6 +33,7 @@
         <activity android:name=".webtoapk.WebToApkActivity" android:exported="false" />
         <activity android:name=".builder.BuilderActivity" android:exported="false" />
         <activity android:name=".learn.LearnCodeActivity" android:exported="false" />
+        <activity android:name=".learn.QuizActivity" android:exported="false" />
         <activity android:name=".theme.ThemeActivity" android:exported="false" />
 
         <provider

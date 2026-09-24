@@ -5,13 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
 
 import com.apkeditor.pro.builder.BuilderActivity;
 import com.apkeditor.pro.learn.LearnCodeActivity;
@@ -26,8 +28,29 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PICK_APK = 1001;
+    private static final long BANNER_INTERVAL = 7000; // 7 detik
+
     private File currentApk;
     private ApkMeta apkMeta;
+    private FrameLayout bannerContainer;
+    private final Handler bannerHandler = new Handler(Looper.getMainLooper());
+    private boolean bannerVisible = false;
+
+    private final Runnable bannerToggle = new Runnable() {
+        @Override public void run() {
+            if (bannerContainer == null) return;
+            bannerVisible = !bannerVisible;
+            if (bannerVisible) {
+                bannerContainer.setAlpha(0f);
+                bannerContainer.setVisibility(View.VISIBLE);
+                bannerContainer.animate().alpha(1f).setDuration(400).start();
+            } else {
+                bannerContainer.animate().alpha(0f).setDuration(400)
+                    .withEndAction(() -> bannerContainer.setVisibility(View.GONE)).start();
+            }
+            bannerHandler.postDelayed(this, BANNER_INTERVAL);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        bannerContainer = findViewById(R.id.bannerContainer);
+        // Mulai siklus banner
+        bannerHandler.postDelayed(bannerToggle, 1000);
+
         findViewById(R.id.btnApkFile).setOnClickListener(v -> pickApk());
-        findViewById(R.id.btnInstalledApp).setOnClickListener(v -> showInstalledApps());
+        findViewById(R.id.btnInstalledApp).setOnClickListener(v ->
+            Toast.makeText(this, "Fitur dalam pengembangan", Toast.LENGTH_SHORT).show());
         findViewById(R.id.btnBuilder).setOnClickListener(v ->
             startActivity(new Intent(this, BuilderActivity.class)));
         findViewById(R.id.btnLearnCode).setOnClickListener(v ->
@@ -50,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnSettings).setOnClickListener(v ->
             Toast.makeText(this, "Settings - coming soon", Toast.LENGTH_SHORT).show());
         findViewById(R.id.btnExit).setOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bannerHandler.removeCallbacks(bannerToggle);
     }
 
     private void pickApk() {
@@ -84,10 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    private void showInstalledApps() {
-        Toast.makeText(this, "Installed app list - coming soon", Toast.LENGTH_SHORT).show();
     }
 
     private static String formatSize(long size) {
