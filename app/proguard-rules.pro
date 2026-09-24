@@ -1,0 +1,6 @@
+-dontwarn org.bouncycastle.**
+-dontwarn org.apache.**
+-dontwarn sun.**
+-keep class com.apkeditor.pro.** { *; }
+-keep class org.bouncycastle.** { *; }
+-keep class com.reandroid.** { *; }

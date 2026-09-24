@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">APK Editor Pro</string>
+    <string name="pick_apk">Pilih APK</string>
+    <string name="decompile">Decompile</string>
+    <string name="recompile">Recompile</string>
+    <string name="sign_apk">Sign APK</string>
+    <string name="zipalign">Zipalign</string>
+    <string name="install">Install</string>
+    <string name="edit_manifest">Edit Manifest</string>
+    <string name="app_info">Info APK</string>
+    <string name="file_manager">File Manager</string>
+    <string name="extract">Extract APK</string>
+    <string name="repack">Repack APK</string>
+</resources>
