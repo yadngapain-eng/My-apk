@@ -48,10 +48,17 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.26.0'
     implementation 'commons-io:commons-io:2.15.1'
     implementation 'com.google.code.gson:gson:2.10.1'
-    // Apktool library (bukan CLI) — dipakai ApktoolRunner
+
+    // Apktool library
     implementation 'org.apktool:apktool-lib:2.9.3'
+
+    // Dependencies transitif apktool-lib (kadang tidak ke-pull otomatis)
+    implementation 'org.yaml:snakeyaml:2.2'
+    implementation 'com.google.guava:guava:32.0.1-jre'
+
     implementation 'org.bouncycastle:bcprov-jdk18on:1.77'
     implementation 'org.bouncycastle:bcpkix-jdk18on:1.77'
+
     // Local JAR
     implementation files('libs/apksig-8.2.2.jar')
 }
