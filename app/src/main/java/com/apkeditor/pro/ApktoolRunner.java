@@ -2,16 +2,13 @@ package com.apkeditor.pro;
 
 import android.content.Context;
 
-import brut.androlib.ApkDecoder;
 import brut.androlib.ApkBuilder;
+import brut.androlib.ApkDecoder;
 import brut.androlib.Config;
 import brut.directory.ExtFile;
 
 import java.io.File;
 
-/**
- * Decompile/recompile APK pakai apktool-lib 2.9.3.
- */
 public class ApktoolRunner {
     private final Context ctx;
 
@@ -26,14 +23,11 @@ public class ApktoolRunner {
 
         Config config = Config.getDefaultConfig();
         config.frameworkDirectory = fwDir.getAbsolutePath();
-        config.outDir = outDir;
         config.forceDelete = true;
         config.decodeResources = Config.DECODE_RESOURCES_FULL;
         config.decodeSources = Config.DECODE_SOURCES_SMALI;
 
-        ApkDecoder decoder = new ApkDecoder();
-        decoder.setExtFile(new ExtFile(apk));
-        decoder.setConfig(config);
+        ApkDecoder decoder = new ApkDecoder(config, new ExtFile(apk));
         decoder.decode(outDir);
 
         return outDir;
@@ -46,13 +40,9 @@ public class ApktoolRunner {
 
         Config config = Config.getDefaultConfig();
         config.frameworkDirectory = fwDir.getAbsolutePath();
-        config.outFile = outApk;
-        config.forceAll = true;
 
-        ApkBuilder builder = new ApkBuilder();
-        builder.setExtFile(new ExtFile(srcDir));
-        builder.setConfig(config);
-        builder.build(srcDir);
+        ApkBuilder builder = new ApkBuilder(config, new ExtFile(srcDir));
+        builder.build(outApk);
 
         return outApk;
     }
