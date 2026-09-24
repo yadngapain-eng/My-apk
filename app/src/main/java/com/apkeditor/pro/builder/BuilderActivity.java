@@ -47,9 +47,25 @@ public class BuilderActivity extends AppCompatActivity {
         findViewById(R.id.btnPickApk).setOnClickListener(v -> pick(PICK_APK, "application/vnd.android.package-archive"));
         findViewById(R.id.btnBuildWeb).setOnClickListener(v -> buildWeb());
         findViewById(R.id.btnRebuildApk).setOnClickListener(v -> rebuildApk());
+        findViewById(R.id.btnTestAapt2).setOnClickListener(v -> testAapt2());
 
         log("Build Offline Builder siap.");
         log("Cek binary: " + (OfflineBuilder.hasBinaries(this) ? "✅ OK" : "❌ Tidak ada"));
+    }
+
+    private void testAapt2() {
+        new Thread(() -> {
+            try {
+                if (OfflineBuilder.hasBinaries(this)) {
+                    String ver = OfflineBuilder.getVersion(this);
+                    runOnUiThread(() -> log("✅ aapt2 OK: " + ver));
+                } else {
+                    runOnUiThread(() -> log("❌ aapt2 binary tidak ada di assets"));
+                }
+            } catch (Exception e) {
+                runOnUiThread(() -> log("❌ " + e.getMessage()));
+            }
+        }).start();
     }
 
     private void pick(int code, String type) {
