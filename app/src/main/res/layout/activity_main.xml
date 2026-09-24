@@ -66,6 +66,8 @@
                 style="@style/MenuButton" android:text="@string/menu_learn_code"
                 android:drawableStart="@drawable/ic_menu_learn"
                 android:drawableTint="@color/primary" />
+            <Button android:id="@+id/btnFileManager"
+                style="@style/MenuButton" android:text="@string/menu_file_manager" />
             <Button android:id="@+id/btnTheme"
                 style="@style/MenuButton" android:text="@string/menu_theme"
                 android:drawableStart="@drawable/ic_menu_theme"

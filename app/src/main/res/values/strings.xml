@@ -9,4 +9,17 @@
     <string name="menu_projects">Projects</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_exit">Exit</string>
+    <string name="menu_file_manager">File Manager</string>
+    <string name="menu_about">About</string>
+    <string name="menu_help">Help</string>
+    <string name="dialog_about_title">Tentang Aplikasi</string>
+    <string name="dialog_about_msg">APK Editor Pro\n\nEditor & builder APK ringan.\nBelajar coding bareng YsDev.</string>
+    <string name="dialog_help_title">Bantuan</string>
+    <string name="dialog_help_msg">1. Pilih APK file untuk buka\n2. Builder untuk bikin APK baru\n3. Learn Code untuk belajar\n4. File Manager untuk lihat hasil</string>
+    <string name="dialog_settings_title">Settings</string>
+    <string name="toast_permission_needed">Izin penyimpanan diperlukan</string>
+    <string name="toast_cache_cleared">Cache dibersihkan</string>
+    <string name="btn_extract">Ekstrak APK</string>
+    <string name="btn_open_folder">Buka Folder</string>
+    <string name="btn_clear_cache">Hapus Cache</string>
 </resources>
