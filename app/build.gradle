@@ -52,7 +52,7 @@ dependencies {
     // Apktool library
     implementation 'org.apktool:apktool-lib:2.9.3'
 
-    // Dependencies transitif apktool-lib (kadang tidak ke-pull otomatis)
+    // Dependency transitif apktool-lib
     implementation 'org.yaml:snakeyaml:2.2'
     implementation 'com.google.guava:guava:32.0.1-jre'
 
