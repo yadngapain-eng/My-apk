@@ -1,48 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:background="@color/bg">
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        app:title="Pengoding" app:titleTextColor="@android:color/white" />
-    <LinearLayout
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        android:orientation="vertical" android:padding="12dp">
-        <TextView android:id="@+id/tvFileName"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="Belum ada APK dipilih" android:textSize="15sp"
-            android:textStyle="bold" android:textColor="#212121" />
-        <TextView android:id="@+id/tvFileInfo"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="4dp" android:text="Pilih file APK untuk mulai"
-            android:textSize="12sp" android:textColor="#757575" />
-        <Button android:id="@+id/btnPickApk"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" android:text="@string/pick_apk" />
-        <GridLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" android:columnCount="3">
-            <Button android:id="@+id/btnDecompile" android:text="@string/decompile" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnRecompile" android:text="@string/recompile" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnSign" android:text="@string/sign_apk" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnZipalign" android:text="@string/zipalign" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnInstall" android:text="@string/install" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnEditManifest" android:text="@string/edit_manifest" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnExtract" android:text="@string/extract" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnRepack" android:text="@string/repack" style="@style/ActionBtn" />
-            <Button android:id="@+id/btnInfo" android:text="@string/app_info" style="@style/ActionBtn" />
-        </GridLayout>
-        <ScrollView
-            android:layout_width="match_parent" android:layout_height="0dp"
-            android:layout_weight="1" android:layout_marginTop="8dp">
-            <TextView android:id="@+id/tvLog"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:background="#1E1E1E" android:fontFamily="monospace"
-                android:padding="10dp" android:text="Log...\n"
-                android:textColor="#00FF00" android:textSize="10sp" />
-        </ScrollView>
-    </LinearLayout>
-</LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <!-- Header: logo + title + menu -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/background"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/text_primary"
+            app:navigationIcon="@drawable/ic_menu_builder"
+            app:menu="@menu/main_menu" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Konten scroll -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="80dp"
+            android:paddingBottom="32dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnApkFile"
+                style="@style/MenuButton"
+                android:text="@string/menu_apk_file" />
+
+            <Button
+                android:id="@+id/btnInstalledApp"
+                style="@style/MenuButton"
+                android:text="@string/menu_installed_app" />
+
+            <Button
+                android:id="@+id/btnBuilder"
+                style="@style/MenuButton"
+                android:text="@string/menu_builder"
+                android:drawableStart="@drawable/ic_menu_builder"
+                android:drawableTint="@color/primary" />
+
+            <Button
+                android:id="@+id/btnLearnCode"
+                style="@style/MenuButton"
+                android:text="@string/menu_learn_code"
+                android:drawableStart="@drawable/ic_menu_learn"
+                android:drawableTint="@color/primary" />
+
+            <Button
+                android:id="@+id/btnTheme"
+                style="@style/MenuButton"
+                android:text="@string/menu_theme"
+                android:drawableStart="@drawable/ic_menu_theme"
+                android:drawableTint="@color/primary" />
+
+            <Button
+                android:id="@+id/btnProjects"
+                style="@style/MenuButton"
+                android:text="@string/menu_projects" />
+
+            <Button
+                android:id="@+id/btnSettings"
+                style="@style/MenuButton"
+                android:text="@string/menu_settings" />
+
+            <Button
+                android:id="@+id/btnExit"
+                style="@style/MenuButton"
+                android:text="@string/menu_exit" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

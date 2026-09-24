@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#1976D2</color>
-    <color name="primary_dark">#0D47A1</color>
-    <color name="accent">#FF5722</color>
-    <color name="bg">#F5F5F5</color>
-    <color name="ic_launcher_background">#1976D2</color>
+    <!-- Dark theme ala APK Editor Pro -->
+    <color name="background">#FF121212</color>
+    <color name="surface">#FF1E1E1E</color>
+    <color name="surface_light">#FF2A2A2A</color>
+    <color name="primary">#FF2196F3</color>
+    <color name="primary_dark">#FF1976D2</color>
+    <color name="accent">#FF03DAC6</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FFB0B0B0</color>
+    <color name="divider">#FF333333</color>
+    <color name="ic_launcher_background">#FF1976D2</color>
+
+    <!-- Theme alternatif -->
+    <color name="theme_blue">#FF2196F3</color>
+    <color name="theme_green">#FF4CAF50</color>
+    <color name="theme_purple">#FF9C27B0</color>
+    <color name="theme_orange">#FFFF9800</color>
+    <color name="theme_red">#FFF44336</color>
+    <color name="theme_teal">#FF009688</color>
 </resources>

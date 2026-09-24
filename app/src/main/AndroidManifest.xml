@@ -9,15 +9,15 @@
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Pengoding"
-        android:requestLegacyExternalStorage="true"
+        android:label="@string/app_name"
         android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="true"
         android:theme="@style/Theme.APKEditor"
         android:usesCleartextTraffic="true">
 
@@ -30,6 +30,10 @@
 
         <activity android:name=".EditorActivity" android:exported="false" />
         <activity android:name=".FileManagerActivity" android:exported="false" />
+        <activity android:name=".webtoapk.WebToApkActivity" android:exported="false" />
+        <activity android:name=".builder.BuilderActivity" android:exported="false" />
+        <activity android:name=".learn.LearnCodeActivity" android:exported="false" />
+        <activity android:name=".theme.ThemeActivity" android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
