@@ -216,23 +216,36 @@ public class MainActivity extends AppCompatActivity {
 
     // ================= SETTINGS =================
     private void showSettings() {
+        boolean dark = com.apkeditor.pro.util.ThemePrefs.isDark(this);
         String[] items = {
             getString(R.string.btn_open_folder),
             getString(R.string.btn_clear_cache),
+            dark ? "☀️ Mode Terang" : "🌙 Mode Gelap",
         };
         new AlertDialog.Builder(this)
             .setTitle(R.string.dialog_settings_title)
             .setItems(items, (d, which) -> {
                 if (which == 0) {
                     startActivity(new Intent(this, FileManagerActivity.class));
-                } else {
+                } else if (which == 1) {
                     deleteRecursive(getCacheDir());
                     Toast.makeText(this, R.string.toast_cache_cleared,
                         Toast.LENGTH_SHORT).show();
+                } else {
+                    toggleTheme();
                 }
             })
             .setNegativeButton("Tutup", null)
             .show();
+    }
+
+    private void toggleTheme() {
+        boolean dark = com.apkeditor.pro.util.ThemePrefs.isDark(this);
+        com.apkeditor.pro.util.ThemePrefs.setDark(this, !dark);
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(!dark
+            ? androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+            : androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO);
+        recreate();
     }
 
     private static void deleteRecursive(File f) {

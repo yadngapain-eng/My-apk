@@ -19,4 +19,9 @@
     <color name="theme_orange">#FFFF9800</color>
     <color name="theme_red">#FFF44336</color>
     <color name="theme_teal">#FF009688</color>
+    <!-- Light mode -->
+    <color name="background_light">#FFFFFFFF</color>
+    <color name="surface_light_theme">#FFF5F5F5</color>
+    <color name="text_primary_light">#FF000000</color>
+    <color name="text_secondary_light">#FF555555</color>
 </resources>
